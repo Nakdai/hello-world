@@ -10,6 +10,7 @@ sys.stdin = f
 data = input().split(" ")
 
 counts = {}
+
 for x in data:
     if x in counts:
         counts[x] += 1

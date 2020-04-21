@@ -5,14 +5,16 @@ sys.stdin = f
 
 data = input().split(" ")
 
-counts = {}
+line = []
 for i in range(0,len(data)):
-    for j in range(i,len(data)):
-        if i<j and data[i] != data[j]:
+    for j in range(i+1,len(data)):
+        print(data[i],data[j])
+        if data[i] != data[j]:
+            line.append(data[i])
+            #line.pop(j)
 
-    else:
-        counts[x] = 1
-print(counts)
-
-for x, i in counts.items():
+print(line)
+"""
+for x, i in line.items():
     print(x, i)
+"""
