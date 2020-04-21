@@ -1,5 +1,7 @@
-142358
-3
-195283
-167358
-142359
+6
+ball
+strike
+ball
+ball
+strike
+ball
