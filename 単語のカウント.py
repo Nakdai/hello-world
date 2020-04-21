@@ -16,7 +16,7 @@ for x in data:
         counts[x] += 1
     else:
         counts[x] = 1
-print(counts)
+#print(counts)
 
 for x, i in counts.items():
     print(x, i)
