@@ -1,7 +1,2 @@
-6
-ball
-strike
-ball
-ball
-strike
-ball
+5 3
+1 2 3 2 1
