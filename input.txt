@@ -1,7 +1,5 @@
-6
-apple
-book
-information
-note
-pen
-pineapple
+142358
+3
+195283
+167358
+142359
