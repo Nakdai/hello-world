@@ -13,31 +13,27 @@ import os
 f = open('input.txt', 'r')
 sys.stdin = f
 
+#入力
 days = input().split(" ")
 #print(days)
-
 all = int(days[0])
 camp = int(days[1])
-data = input().split(" ")
-#print(data)
-#print(data[0:0+camp])
-data_sum = []
-s = []
+ #リストの要素を全て数値型にする。
+data = list(map((lambda x: int(x)), input().split(" ")))
 
-for i in range(all-camp+1):
-    s = data[i:i+camp]
-    #リストの要素を全て数値型にする。
-    s = map((lambda x: int(x)), s)
-    data_i = sum(s)
-    #print(data_i)
-    data_sum.append(data_i)
+term_i = sum(data[0:camp]) #最初の区間の訪問者数
+max_term = term_i #訪問者数最大区間
+cand_day = 1 #候補日の数
+earliest_cand = 0 #一番早い候補日
 
-cand_day = max(data_sum)
-print(data_sum.count(cand_day),end = " ")
+#2番目以降の訪問者数
+for i in range(1,all-camp+1):
+    term_i = term_i - data[i-1] + data[i+camp-1]
+    if term_i == max_term:
+        cand_day += 1
+    elif term_i > max_term:
+        earliest_cand = i
+        max_term = term_i
+        cand_day = 1
 
-x = 0
-while True:
-    if data_sum[x] == cand_day:
-        print(x+1)
-        break
-    x += 1
+print(cand_day,earliest_cand+1)
