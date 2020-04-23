@@ -24,3 +24,46 @@ import sys
 import os
 f = open('input.txt', 'r')
 sys.stdin = f
+
+inp = input().split(" ")
+N = int(inp[0])
+M = int(inp[1])
+#print(N,M)
+hands = input()
+G = hands.count("G")
+C = hands.count("C")
+P = hands.count("P")
+#print(G,C,P)
+
+p0 = M//5 if M % 5 == 0 or M % 5 == 2 or M % 5 == 4 else M//5-1
+#print(p0)
+if M % 5 == 0:
+    c0 = 0
+elif M % 5 == 1:
+    c0 = 3
+elif M % 5 == 2:
+    c0 = 1
+elif M % 5 == 3:
+    c0 = 4
+elif M % 5 == 4:
+    c0 = 2
+#print(c0)
+g0 = N - p0 - c0
+#print(g0)
+def w(k):
+    pk = p0 - 2*k
+    ck = c0 + 5*k
+    gk = g0 - 3*k
+    return min(pk,G) + min(ck,P) + min(gk,C)
+#print(w(k))
+km = p0//2
+FK = [w(i) for i in range(km+1)]
+wmax = max(FK)
+"""
+k = 0
+wmax = w(0)
+while w(k+1)>=w(k) and k <= km:
+    wmax = w(k+1)
+    k += 1
+"""
+print(wmax)
