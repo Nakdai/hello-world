@@ -1,46 +1,71 @@
-"""
-import sys
-import os
-f = open('input.txt', 'r')
-sys.stdin = f
 
-# じゃんけんの回数と指の合計の本数の入力を受け取り、int型に変換
-num, finger = [int(x) for x in input().split()]
+# In[]
+# N,Mの生成
+import random
 
-# 相手の出す手の入力を受け取る
-hands = input()
+N = random.randint(1,1000)
 
-# 相手がグーを出す回数
-g = hands.count("G")
+g = random.randint(0,N)
+c = random.randint(0,N-g)
+p = N-c-g
+M = 5*p + 2*c
+print(N,M)
+# In[]
+# 相手の手札の生成
+G = random.randint(0,N)
+C = random.randint(0,N-G)
+P = N-C-G
+print(G,C,P)
+# In[]
+N = 245
+M = 1214
+G = 68
+C = 92
+P = 85
+#In[]
+p0 = M//5 if M % 5 == 0 or M % 5 == 2 or M % 5 == 4 else M//5-1
+print(p0)
+# In[]
+if M % 5 == 0:
+    c0 = 0
+elif M % 5 == 1:
+    c0 = 3
+elif M % 5 == 2:
+    c0 = 1
+elif M % 5 == 3:
+    c0 = 4
+elif M % 5 == 4:
+    c0 = 2
+print(c0)
+# In[]
+g0 = N - p0 - c0
+print(g0)
+#In[]
+k = 0
+km = min(p0//2,g0//3)
+print(km)
+#In[]
+def w(k):
+    pk = p0 - 2*k
+    ck = c0 + 5*k
+    gk = g0 - 3*k
+    return min(pk,G) + min(ck,P) + min(gk,C)
+print(w(k))
+#In[]
+import matplotlib.pyplot as plt
+import numpy as np
 
-# 相手がチョキを出す回数
-c = hands.count("C")
-"""
+K = np.arange(km)
+WK = [w(k) for k in range(km+1)]
+print(WK)
+#In[]
+fig, ax = plt.subplots() # Create a figure containing a single axes.
+ax.plot(K,WK) # Plot some data on the axes.
 
+#In[]
+FK = [w(i) for i in range(km+1)]
+wmax = max(FK)
 
-l = "CCGGPCCPGCCCPCCCPPCPPCGGCGCGCCPGGPCGGGCPCPGGPCCPPCCGPPGGGPPCPGGPPGCPGCCCGCCPCPCPCPCGPCGGCGPGCGGGCGCCGPCCGPGCCCPCCPPPPPPGGCGPCGGGCGGGGPPPCPGGCCCGCGCPGGCPCCGCCCPPPPPCGCCCPPCPPPCCPGCCPGGCPCCCPGCPGGGPCGGPPGPGCPPPGCCCGCGPPCPCPPPPCPCCPPPPPCCCCPPPPPCGP"
-num = 245
-finger = 1214
-g = l.count("G")
-c = l.count("C")
-p = num - g - c
+print(wmax)
+# In[]
 
-# パーを出せる最大の回数
-max_p = finger // 5
-
-# 最大の勝利数を代入する変数を定義
-max_win = 0
-
-# パーの回数（範囲：0 ~ num）
-for i in range(max_p + 1):
-    # チョキの回数（範囲：0 ~ num - i)
-    for j in range(num + 1 - i):
-        # 合計の数がfingerと等しい時
-        if 5*i + 2*j == finger:
-            # 勝利数を計算
-            win = min(g, i) + min(p, j) + min(c, num - i - j)
-            # 以前より大きい場合のみ更新
-            max_win = max(max_win, win)
-
-# 最大の勝利数を出力
-print(max_win)
