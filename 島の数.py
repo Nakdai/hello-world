@@ -1,70 +1,62 @@
-"""
-列の数がM、行の数がNの表があります。表の各マスは白か黒で塗られています。
-黒で塗られたマスが上下左右で隣接している時、その黒マスの塊をまとめて「島」と呼びます。
-例えば、以下のような4列×5行の表（M=4、N=5）があった場合、
-
-
-この表には以下の(1)～(3)のように3つの島が存在します。
-
-
-島の数を計算して出力するプログラムを作成して下さい。
-"""
-
-# 標準入力からの取得
 import sys
 import os
 f = open('input.txt', 'r')
 sys.stdin = f
-#In[]
-#入力
-M,N = [int(x) for x in input().split()]
-islands = []
-for i in range(N):
-    islands.append(input().split())
-#print(irlands)
-"""
-import random
+# 表の列数と行数の入力を受け取り、int型に変換
+col, row = [int(x) for x in input().split()]
 
-M = random.randint(1,100)
-N = random.randint(1,100)
-islands = []
-islands = [[str(random.randint(0,1)) for j in range(M)] for i in range(N)]
-print(M,N)
-"""
-#1行目、1列目に0ベクトルを追加する。
-zero_row = [["0"]*M]
-islands = zero_row + islands
-for i in range(N+1):
-    islands[i].insert(0,"0")
-#print(islands)
+# 1行目を"0"で埋める
+map_list = [["0"] * (col+2)]
 
-#In[]
-same_island = []
-loop = 0
-#2行目2列目を起点に1セルずつ見ていく。
-for i in range(1,N+1):
-    for j in range(1,M+1):
-        if islands[i][j] == "1":
-            clear = 0
-            for k in range(len(same_island)):
-                if [i,j-1] in same_island[k]:
-                    same_island[k].append([i,j])
-                    left = k
-                    clear += 1
-            for k in range(len(same_island)):
-                if [i-1,j] in same_island[k]:
-                    same_island[k].append([i,j])
-                    up = k
-                    clear += 1
-            if clear == 2 and left != up:
-                for l in range(len(same_island[left])):
-                    same_island[up].append(same_island[left][l])
-                #same_island[up].remove([i,j])
-                del same_island[left]
-            if clear == 0:
-                same_island.append([[i,j]])
-            loop += 1
+# 各行に対して繰り返す
+for i in range(row):
+    # "0"で挟む
+    map_list.append(["0"] + input().split() + ["0"])
 
-#print(loop)
-#print(same_island)
-print(len(same_island))
+# 1行目と同じリストを最後の行に追加
+map_list.append(map_list[0])
+
+# 関数を定義
+def check(x, y):
+    # リストを定義し最初の場所を追加
+    lands = [[x, y]]
+
+    # landsの要素が無くなるまで繰り返す
+    while lands:
+        # 座標を更新
+        x, y = lands.pop()
+
+        # "0"に置換
+        map_list[y][x] = "0"
+
+        # 下の場所
+        if map_list[y+1][x] == "1":
+            lands.append([x, y+1])
+        # 右の場所
+        if map_list[y][x+1] == "1":
+            lands.append([x+1, y])
+        # 上の場所
+        if map_list[y-1][x] == "1":
+            lands.append([x, y-1])
+        # 左の場所
+        if map_list[y][x-1] == "1":
+            lands.append([x-1, y])
+
+# 島の数を数える変数
+count = 0
+
+''' colが列数、rowが行数 '''
+# 2行目からrow+1行目まで繰り返す
+for i in range(1, row+1):
+    # 2列目からcol+1列目まで繰り返す
+    for j in range(1, col+1):
+        # "1"の場合
+        if map_list[i][j] == "1":
+          # 島の大きさを確認し"0"に置換
+            check(j, i)
+
+            # 島をカウント
+            count += 1
+
+# 島の数を出力
+print(count)
