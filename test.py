@@ -1,5 +1,4 @@
 
-
 import sys
 import os
 f = open('input.txt', 'r')
@@ -63,4 +62,3 @@ wmax = max(WK)
 
 print(wmax)
 # In[]
-
