@@ -1,22 +1,21 @@
-じゃんけんの手の出し方
-条件：N = p + c + g, M = 5*p + 2*c
-全勝する時の指の本数をMXとする。
-M-MX＝Xを求める。
-手を変えるときの差分を以下のように書く。
-p → g = Fpg = -5, Fpc = -3, Fcg = -2, Fgc = 2, Fcp = 3, Fgp = 5
-条件：N = px + cx + gx, MX = 5*px + 2*cx + 0*gx　を満たす(px,cx,gx)
-の組は1つである。
-px * Fpg + cx * Fcg <= X <= gx * Fgp + cx * Fcp
+ハノイの塔
+手の数は2^n-1回になる。
+円盤が1個のときの最短手順:2^1-1 = 1 回
+円盤が2個のときの最短手順:2^2-1 = 3 回
 
-X > 0　のとき、
-X = a * Fgp + b * Fcp + c * Fgc (a + c <= gx, b <= cx)
-X < 0　のとき、
-X = a * Fpg + b * Fcg + c * Fpc (a + c <= px, b <= cx)　
-(a,b,c)の組のうち、　a + b + c = L　が最小となる（Lmin）ものを求める。
+円盤がn個のときの最短手順:
+1:円盤 1~n-1 を杭A→Bに移動  2^(n-1) 回
+2:円盤 n を杭A→Cに移動  1 回
+3:円盤 1~n-1 を杭B→Cに移動  2^(n-1) 回
 
-方針：
-出来るだけaを大きくし、数合わせにbとcを使う。aが不足する場合はbを使い、
-数合わせにcを使う。
-0:aのみ
-1,6:cが2個ある→Fcp+Fcg、gが3個ある→Fgc*3
-2,3:
+tを2進数に変換する。
+tのn桁目が 0 → 円盤 n がstartにある。(start = "A", goal = "C")
+& tのn-1桁目が 0 → 円盤 n-1 がstartにある。(start = "A", goal = "B")
+or tのn-1桁目が 1 → 円盤 n がgoalにある。(start = "A", goal = "B")
+
+tのn桁目が 1 → 円盤 n がgoalにある。(start = "A", goal = "C")
+& tのn-1桁目が 0 → 円盤 n-1 がstartにある。(start = "B", goal = "C")
+or tのn-1桁目が 1 → 円盤 n-1 がgoalにある。(start = "B", goal = "C")
+
+k(:2 <= k <= n)桁目が0のとき: 円盤 k,k-1 のstartは同じ、goalは異なる。
+k(:2 <= k <= n)桁目が1のとき: 円盤 k,k-1 のgoalは同じ、startは異なる。
